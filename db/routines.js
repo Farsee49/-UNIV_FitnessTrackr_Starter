@@ -40,6 +40,11 @@ async function getRoutinesWithoutActivities() {
 };
 
 async function getAllRoutines() {
+//   try{
+//     const {rows :routines} =
+// }catch(error){throw error
+// }
+
  
 }
 
