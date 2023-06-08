@@ -23,7 +23,7 @@ async function getAllActivities() {
       const {rows} = await client.query(`
       SELECT * FROM activities;
       `)
-   //console.log('ROWS:',rows)
+    //console.log(results)
       return rows;
   }catch(error){
     console.error('ERROR Getting All Activities !!!');
@@ -37,7 +37,7 @@ async function getActivityById(id) {
     SELECT * FROM activities
     WHERE id = $1;
     `,[id]);
-    //console.log('RESULT:',activity)
+    //console.log(results)
     return activity;
   }catch(error){
     console.error("ERROR Getting Activity by Id !!!");
@@ -52,8 +52,10 @@ async function getActivityByName(name) {
       WHERE name = $1
     `, [name]);
 
+     //console.log(results)
     return activity;
     } catch (error) {
+      console.error('ERROR Getiing Activity by Name!!!',error)
         throw error;
     }
 };
@@ -104,6 +106,7 @@ async function updateActivity({ id, ...fields }) {
   }
    
   } catch (error) {
+    console.error('ERROR Updating Activity!!!',error);
       throw error;
   }
 };
