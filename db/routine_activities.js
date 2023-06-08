@@ -6,31 +6,60 @@ async function addActivityToRoutine({
   count,
   duration,
 }) {
-   
-  try {
-    const { rows: [routineActivity] } = await client.query(`
-    INSERT INTO routine_activities ( "routineId", "activityId", count , duration)
-    VALUES($1, $2, $3, $4)
-    ON CONFLICT ("routineId", "activityId") DO NOTHING
-    RETURNING *;
-      `, [ routineId, activityId, count, duration]);
+  try{
+     const {rows: [routineActivity]} = await client.query(`
 
-    console.log(routineActivity)
+      INSERT INTO routine_activities("routineId", "activityId", count, duration)
+      VALUES($1, $2, $3, $4)
+      ON CONFLICT("routineId", "activityId") DO Nothing
+      RETURNING *;
+     `,[routineId, activityId, count, duration]);
+
+    //  console.log(results)
     return routineActivity;
-  } catch (error) {
+  }catch(error){
+    console.error('ERROR Adding Activities to Routines !!!',error);
     throw error;
   }
 };
 
-async function getRoutineActivityById(id) {}
+async function getRoutineActivityById(id) {
+  
+};
 
-async function getRoutineActivitiesByRoutine({ id }) {}
+async function getRoutineActivitiesByRoutine({ id }) {
+  
+};
 
-async function updateRoutineActivity({ id, ...fields }) {}
+async function updateRoutineActivity({ id, ...fields }) {
+//   const setString = Object.keys(fields).map(
+//     (key, index) => `"${key}"=$${index + 1}`
+// ).join(',');
 
-async function destroyRoutineActivity(id) {}
+//   try {
+//     if (setString.length > 0) {
+//    const { rows: [ routine_activity ] } = await client.query(`
+//   UPDATE routine_activities
+//   SET ${setString}
+//   WHERE id=${id}
+//   RETURNING *;
+// `, Object.values(fields)); 
 
-async function canEditRoutineActivity(routineActivityId, userId) {}
+//   return routine_activity;
+//   }
+   
+//   } catch (error) {
+//       throw error;
+//   }
+};
+
+async function destroyRoutineActivity(id) {
+ 
+};
+
+async function canEditRoutineActivity(routineActivityId, userId) {
+  
+};
 
 module.exports = {
   getRoutineActivityById,

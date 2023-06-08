@@ -24,7 +24,7 @@ async function dropTables() {
 
     console.log("Finished dropping tables!");
   } catch (error) {
-    console.error("Error dropping tables!");
+    console.error('ERROR Dropping Tables!!!',error);
     throw error;
  }
 };
@@ -68,7 +68,7 @@ async function createTables() {
 
     console.log("Finished building tables!");
   } catch (error) {
-    console.error("Error building tables!");
+    console.error("ERROR Building Tables!!!",error);
     throw error;
 }
 };
