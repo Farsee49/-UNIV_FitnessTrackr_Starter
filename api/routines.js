@@ -117,9 +117,10 @@ routinesRouter.delete('/:routineId', async (req, res, next) => {
     }
     await destroyRoutine(routineId);
     res.send(routine);
-  } catch (error) {
-    next(error);
-  }
+  }catch ({name, message}) {
+    next({name, message})
+}
+
 });
 
 //=====================================================================
