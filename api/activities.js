@@ -45,7 +45,7 @@ activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
 activitiesRouter.get('/', async (req, res, next) => {
   try {
     const activities = await getAllActivities()
-    
+
     if(activities){
       res.send(activities)
   }
@@ -85,17 +85,14 @@ activitiesRouter.patch('/:activityId',  async (req, res, next) => {
  
  try {
   const { name, description } = req.body;
-
   const updateFields = {};
 
   if (activityId) {
     updateFields.id = activityId;
   }
-
   if (name) {
     updateFields.name = name;
   }
-
   if (description) {
     updateFields.description = description;
   }
@@ -122,7 +119,6 @@ activitiesRouter.patch('/:activityId',  async (req, res, next) => {
 } catch ({ name, message }) {
   next({ name, message });
 }
-
 });
 
 module.exports = activitiesRouter;

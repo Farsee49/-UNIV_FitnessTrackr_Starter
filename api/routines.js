@@ -125,40 +125,26 @@ routinesRouter.delete('/:routineId', async (req, res, next) => {
 //=====================================================================
 // POST /api/routines/:routineId/activities
 routinesRouter.post("/:routineId/activities", async (req, res, next) => {
-    const { count, duration, activityId } = req.body;
-    const { routineId } = req.params;
-  
+    const {routineId} = req.params
+    const {activityId, count, duration} = req.body
+    
     try {
-      const routineActivities = await getRoutineActivitiesByRoutine({
-        id: routineId,
-      });
-      
-      const routineActivitiesReturn = routineActivities.filter(
-        (routineActivity) => {
-          return routineActivity === activityId;
+        const routine = await getRoutineById(routineId);
+        
+        if (routine.creatorId === req.user.id) {
+            const updatedActivity = await addActivityToRoutine({ routineId, activityId, count, duration });
+            res.send(updatedActivity);
+        } else {
+            res.status(403);
+            res.send({
+                error: "error posting routine_activities",
+                message: `Activity ID ${activityId} already exists in Routine ID ${routineId}`,
+                name: DuplicateRoutineActivityError(routineId, activityId)
+            })
         }
-      );
-      
-      // routineAct is an array, need filter around
-      if (activityId === routineActivities.activityId) {
-        res.send({
-            error: "Duplicate key",
-            message: DuplicateRoutineActivityError(routineId, req.body.activityId),
-            name: "Duplicate Routine Activity Error"
-          });
-      } else {
-        const addingActivity = await addActivityToRoutine({
-          routineId,
-          activityId,
-          count,
-          duration,
-        });
-  
-        res.send(addingActivity);
-      }
-    } catch (error) {
-      throw error;
+    }  catch ({name, message}) {
+        next({name, message})
     }
-  });
+})
 
 module.exports = routinesRouter;

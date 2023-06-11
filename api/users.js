@@ -128,7 +128,7 @@ usersRouter.get('/me', async (req, res, next) => {
 //=====================================================================
 //GET /api/users/:username/routines
 usersRouter.get('/:username/routines', async (req, res, next) => {
-     const username = req.params.username;
+     const {username} = req.params
      const user = req.user;
  // console.log(user)
      const prefix = 'Bearer ';
