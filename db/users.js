@@ -43,13 +43,13 @@ async function getUser({ username, password }) {
 
 };
 
-async function getUserById(id) {
+async function getUserById(userId) {
   try {
     const { rows: [ user ] } = await client.query(`
     SELECT *
     FROM users
-    WHERE id=$1;
-  `, [id]);
+    WHERE id = $1;
+  `, [userId]);
 
   delete user.password;
   //console.log(result) 
