@@ -1,5 +1,7 @@
 const express = require("express");
 const client = require("../db/client");
+const { requireUser } = require("./utils");
+const routineActivitiesRouter = express.Router();
 const {
   updateRoutineActivity,
   getRoutineActivityById,
@@ -7,8 +9,11 @@ const {
   canEditRoutineActivity,
   destroyRoutineActivity,
 } = require("../db");
-const { requireUser } = require("./utils");
-const routineActivitiesRouter = express.Router();
+
+const{
+    UnauthorizedUpdateError,
+    UnauthorizedDeleteError
+} = require('../errors')
 
 
 //=====================================================================
@@ -29,7 +34,7 @@ routineActivitiesRouter.patch('/:routineActivityId', requireUser, async(req, res
             res.send({
                 error: 'UnauthorizedUpdateError',  
                 message: `User ${req.user.username} is not allowed to update ${routine.name}`,
-                name:'UnauthorizedUpdateError'
+                name: UnauthorizedUpdateError()
             })
         }
     } catch ({name, message}) {
@@ -56,7 +61,7 @@ routineActivitiesRouter.delete('/:routineActivityId', requireUser, async(req, re
             res.send({
                 error: 'UnauthorizedDeleteError',
                 message: `User ${req.user.username} is not allowed to delete ${routine.name}`,
-                name: 'UnauthorizedDeleteError'
+                name: UnauthorizedDeleteError()
             })
         }
     } catch ({name, message}) {
