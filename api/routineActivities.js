@@ -40,7 +40,6 @@ routineActivitiesRouter.patch('/:routineActivityId', requireUser, async(req, res
     } catch ({name, message}) {
         next({name, message})
     }
-
 });
 
   

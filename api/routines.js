@@ -91,7 +91,6 @@ routinesRouter.patch('/:routineId', async (req, res, next) => {
           name: 'Unauthorized Update Error'
         });
     };
-  
       const updatedRoutine = await updateRoutine(updateFields);
       res.send(updatedRoutine);
   
